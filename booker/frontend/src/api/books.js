@@ -5,6 +5,9 @@ const API_URL = "http://localhost/api/books";
 // GET
 export const getBooks = async () => {
   const res = await axios.get(API_URL);
+
+  console.log("RAW API RESPONSE:", res.data);
+
   return res.data.data;
 };
 

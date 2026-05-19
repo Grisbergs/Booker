@@ -3,12 +3,25 @@ import { getBooks } from "../api/books";
 
 export default function BookList({ refreshTrigger }) {
   const [books, setBooks] = useState([]);
-  const [loading, setLoading] = useState(true);
+const [loading, setLoading] = useState(true);
+const [error, setError] = useState(null);
 
 useEffect(() => {
   const fetchBooks = async () => {
-    const data = await getBooks();
-    setBooks(data);
+    try {
+      setLoading(true);
+
+      const data = await getBooks();
+
+      console.log("BOOKS RESPONSE:", data);
+
+      setBooks(data); // MUST be an array
+    } catch (err) {
+      console.error("Fetch error:", err);
+      setError("Failed to load books");
+    } finally {
+      setLoading(false); // ALWAYS runs
+    }
   };
 
   fetchBooks();
@@ -20,7 +33,7 @@ useEffect(() => {
     <div style={{ padding: "20px" }}>
       <h1>📚 Book Library</h1>
 
-      {books.length === 0 ? (
+      {(books ?? []).length === 0 ? (
         <p>No books found.</p>
       ) : (
         <div style={{ display: "grid", gap: "10px" }}>

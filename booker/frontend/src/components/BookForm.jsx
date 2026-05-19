@@ -25,7 +25,7 @@ export default function BookForm({ onBookCreated }) {
   try {
     const newBook = await createBook(form);
 
-    // 👇 THIS is where it goes
+   
     onBookCreated();
 
     setForm({
