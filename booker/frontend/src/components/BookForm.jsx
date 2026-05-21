@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { createBook } from "../api/books";
+import { useEffect, useState } from "react";
+import { createBook, updateBook } from "../api/books";
 
-export default function BookForm({ onBookCreated }) {
+export default function BookForm({   onBookCreated,
+  editingBook,
+  setEditingBook }) {
   const [form, setForm] = useState({
     title: "",
     author: "",
@@ -10,6 +12,16 @@ export default function BookForm({ onBookCreated }) {
   });
 
   const [loading, setLoading] = useState(false);
+  useEffect(() => {
+  if (editingBook) {
+    setForm({
+      title: editingBook.title || "",
+      author: editingBook.author || "",
+      description: editingBook.description || "",
+      language: editingBook.language || "en",
+    });
+  }
+}, [editingBook]);
 
   const handleChange = (e) => {
     setForm({
@@ -18,15 +30,21 @@ export default function BookForm({ onBookCreated }) {
     });
   };
 
- const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
   e.preventDefault();
-  setLoading(true);
 
   try {
-    const newBook = await createBook(form);
+    if (editingBook) {
+      // UPDATE MODE
+      await updateBook(editingBook.id, form);
 
-   
-    onBookCreated();
+      setEditingBook(null);
+    } else {
+      // CREATE MODE
+      await createBook(form);
+
+      onBookCreated();
+    }
 
     setForm({
       title: "",
@@ -34,11 +52,8 @@ export default function BookForm({ onBookCreated }) {
       description: "",
       language: "en",
     });
-
   } catch (err) {
-    console.error("Error creating book:", err);
-  } finally {
-    setLoading(false);
+    console.error(err);
   }
 };
 
@@ -73,9 +88,25 @@ export default function BookForm({ onBookCreated }) {
 
       <br />
 
-      <button type="submit" disabled={loading}>
-        {loading ? "Saving..." : "Add Book"}
-      </button>
+    <button type="submit" disabled={loading}>
+  {loading ? "Saving..." : editingBook ? "Update Book" : "Add Book"}
+</button>
+      {editingBook && (
+  <button
+    type="button"
+    onClick={() => {
+      setEditingBook(null);
+      setForm({
+        title: "",
+        author: "",
+        description: "",
+        language: "en",
+      });
+    }}
+  >
+    Cancel Edit
+  </button>
+)}
     </form>
   );
 }

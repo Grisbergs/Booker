@@ -4,6 +4,7 @@ import BookForm from "./components/BookForm";
 
 function App() {
   const [refresh, setRefresh] = useState(0);
+  const [editingBook, setEditingBook] = useState(null);
 
   const handleBookCreated = () => {
     setRefresh((r) => r + 1);
@@ -11,8 +12,16 @@ function App() {
 
   return (
     <div style={{ padding: "20px" }}>
-      <BookForm onBookCreated={handleBookCreated} />
-      <BookList refreshTrigger={refresh} />
+     <BookForm
+  onBookCreated={handleBookCreated}
+  editingBook={editingBook}
+  setEditingBook={setEditingBook}
+/>
+
+<BookList
+  refreshTrigger={refresh}
+  setEditingBook={setEditingBook}
+/>
     </div>
   );
 }
