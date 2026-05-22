@@ -1,0 +1,26 @@
+.list {
+  margin-top: var(--space-lg);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.bookCard {
+  text-align: left;
+}
+
+.bookCard h3 {
+  margin: 0 0 var(--space-xs);
+}
+
+.bookCard p {
+  margin: 0 0 var(--space-xs);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}

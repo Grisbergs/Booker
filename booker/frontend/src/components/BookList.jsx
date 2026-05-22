@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { getBooks, deleteBook } from "../api/books";
+import Button from "@ds/button";
+import Card from "@ds/card";
+import styles from "./BookList.module.css";
 
 export default function BookList({ refreshTrigger, setEditingBook }) {
   const [books, setBooks] = useState([]);
@@ -10,11 +13,7 @@ export default function BookList({ refreshTrigger, setEditingBook }) {
     const fetchBooks = async () => {
       try {
         setLoading(true);
-
         const data = await getBooks();
-
-        console.log("BOOKS RESPONSE:", data);
-
         setBooks(data);
       } catch (err) {
         console.error("Fetch error:", err);
@@ -28,67 +27,39 @@ export default function BookList({ refreshTrigger, setEditingBook }) {
   }, [refreshTrigger]);
 
   const handleDelete = async (id) => {
-    const confirmed = window.confirm("Delete this book?");
-
-    if (!confirmed) return;
-
+    if (!window.confirm("Delete this book?")) return;
     try {
       await deleteBook(id);
-
-      // remove from UI immediately
-      setBooks((prevBooks) =>
-        prevBooks.filter((book) => book.id !== id)
-      );
+      setBooks((prev) => prev.filter((b) => b.id !== id));
     } catch (err) {
       console.error("Delete failed:", err);
       alert("Failed to delete book");
     }
   };
 
-  if (loading) return <p>Loading books...</p>;
+  if (loading) return <p>Loading books…</p>;
   if (error) return <p>{error}</p>;
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>📚 Book Library</h1>
-
+    <div className={styles.list}>
       {(books ?? []).length === 0 ? (
         <p>No books found.</p>
       ) : (
-        <div style={{ display: "grid", gap: "10px" }}>
+        <div className={styles.grid}>
           {books.map((book) => (
-            <div
-              key={book.id}
-              style={{
-                border: "1px solid #ddd",
-                padding: "10px",
-                borderRadius: "8px",
-              }}
-            >
+            <Card key={book.id} className={styles.bookCard}>
               <h3>{book.title}</h3>
               <p><strong>Author:</strong> {book.author}</p>
               <p>{book.description}</p>
-
-              <button
-                onClick={() => handleDelete(book.id)}
-                style={{
-                  marginTop: "10px",
-                  padding: "6px 12px",
-                  cursor: "pointer",
-                }}
-              >
-                Delete
-              </button>
-              <button
-                onClick={() => setEditingBook(book)}
-               style={{  marginTop: "10px",
-                 marginLeft: "8px",
-                  padding: "6px 12px",
-                  cursor: "pointer",}}
-              >
-              Edit
-              </button>
-            </div>
+              <div className={styles.actions}>
+                <Button variant="danger" onClick={() => handleDelete(book.id)}>
+                  Delete
+                </Button>
+                <Button variant="secondary" onClick={() => setEditingBook(book)}>
+                  Edit
+                </Button>
+              </div>
+            </Card>
           ))}
         </div>
       )}
