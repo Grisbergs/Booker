@@ -2,6 +2,7 @@ import { useState } from "react";
 import BookList from "./components/BookList";
 import BookForm from "./components/BookForm";
 import { useTheme } from "@ds/theme";
+import PageLayout from "@ds/page-layout";
 import styles from "./App.module.css";
 
 function App() {
@@ -10,7 +11,7 @@ function App() {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <div className={styles.page}>
+    <PageLayout>
       <div className={styles.header}>
         <h1>Booker</h1>
         <button className={styles.themeToggle} onClick={toggleTheme}>
@@ -28,7 +29,7 @@ function App() {
         refreshTrigger={refresh}
         setEditingBook={setEditingBook}
       />
-    </div>
+    </PageLayout>
   );
 }
 

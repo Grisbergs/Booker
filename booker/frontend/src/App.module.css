@@ -1,7 +1,3 @@
-.page {
-  padding: var(--space-lg);
-}
-
 .header {
   display: flex;
   justify-content: space-between;

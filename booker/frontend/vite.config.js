@@ -9,12 +9,17 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@ds/button':   ds('button'),
-      '@ds/input':    ds('input'),
-      '@ds/textarea': ds('textarea'),
-      '@ds/card':     ds('card'),
-      '@ds/theme':    ds('theme'),
-      '@ds':          ds(''),
+      '@ds/button':      ds('button'),
+      '@ds/input':       ds('input'),
+      '@ds/textarea':    ds('textarea'),
+      '@ds/card':        ds('card'),
+      '@ds/alert':       ds('alert'),
+      '@ds/modal':       ds('modal'),
+      '@ds/page-layout': ds('page-layout'),
+      '@ds/form-group':  ds('form-group'),
+      '@ds/badge':       ds('badge'),
+      '@ds/theme':       ds('theme'),
+      '@ds':             ds(''),
     },
   },
 })
