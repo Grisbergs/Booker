@@ -14,4 +14,9 @@ class Book extends Model
         'language',
         'cover_image_path',
     ];
+
+    public function files()
+    {
+        return $this->hasMany(BookFile::class);
+    }
 }

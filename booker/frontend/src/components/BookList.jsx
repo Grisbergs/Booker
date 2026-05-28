@@ -4,6 +4,7 @@ import Button from "@ds/button";
 import Card from "@ds/card";
 import Alert from "@ds/alert";
 import Modal from "@ds/modal";
+import BookFilesModal from "./BookFilesModal";
 import styles from "./BookList.module.css";
 
 export default function BookList({ refreshTrigger, setEditingBook }) {
@@ -12,6 +13,7 @@ export default function BookList({ refreshTrigger, setEditingBook }) {
   const [error, setError] = useState(null);
   const [pendingDeleteId, setPendingDeleteId] = useState(null);
   const [deleteError, setDeleteError] = useState(null);
+  const [filesBook, setFilesBook] = useState(null);
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -65,6 +67,10 @@ export default function BookList({ refreshTrigger, setEditingBook }) {
         </div>
       </Modal>
 
+      {filesBook && (
+        <BookFilesModal book={filesBook} onClose={() => setFilesBook(null)} />
+      )}
+
       {(books ?? []).length === 0 ? (
         <Alert variant="info">No books yet. Add one above.</Alert>
       ) : (
@@ -75,11 +81,14 @@ export default function BookList({ refreshTrigger, setEditingBook }) {
               <p><strong>Author:</strong> {book.author}</p>
               <p>{book.description}</p>
               <div className={styles.actions}>
-                <Button variant="danger" onClick={() => setPendingDeleteId(book.id)}>
-                  Delete
+                <Button variant="primary" onClick={() => setFilesBook(book)}>
+                  Files
                 </Button>
                 <Button variant="secondary" onClick={() => setEditingBook(book)}>
                   Edit
+                </Button>
+                <Button variant="danger" onClick={() => setPendingDeleteId(book.id)}>
+                  Delete
                 </Button>
               </div>
             </Card>
