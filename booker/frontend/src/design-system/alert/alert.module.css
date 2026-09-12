@@ -1,0 +1,53 @@
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  border: 1px solid transparent;
+}
+
+.message {
+  flex: 1;
+}
+
+.dismiss {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1;
+  color: inherit;
+  opacity: 0.6;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.dismiss:hover {
+  opacity: 1;
+}
+
+.info {
+  background: rgb(229, 244, 254);
+  color: rgb(12, 84, 148);
+  border-color: rgb(150, 210, 252);
+}
+
+.success {
+  background: rgb(236, 252, 243);
+  color: rgb(5, 95, 60);
+  border-color: var(--border);
+}
+
+.warning {
+  background: rgb(255, 251, 235);
+  color: rgb(120, 70, 0);
+  border-color: rgb(252, 211, 77);
+}
+
+.danger {
+  background: rgb(254, 242, 242);
+  color: rgb(153, 27, 27);
+  border-color: rgb(252, 165, 165);
+}

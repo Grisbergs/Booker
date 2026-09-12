@@ -1,0 +1,77 @@
+.fileList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.fileRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.size {
+  flex: 1;
+  font-size: 0.85rem;
+  color: var(--neutral-500);
+}
+
+.empty {
+  font-size: 0.9rem;
+  color: var(--neutral-500);
+  margin: 0 0 var(--space-md);
+}
+
+.upload {
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-md);
+}
+
+.uploadLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--primary-600);
+  transition: background 0.15s;
+}
+
+.uploadLabel:hover {
+  background: var(--primary-50);
+}
+
+.fileInput {
+  display: none;
+}
+
+.progress {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.progressTrack {
+  flex: 1;
+  height: 8px;
+  background: var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+  background: var(--primary-500);
+  transition: width 0.1s;
+}
+
+.progressLabel {
+  font-size: 0.8rem;
+  color: var(--neutral-500);
+  min-width: 2.5rem;
+  text-align: right;
+}

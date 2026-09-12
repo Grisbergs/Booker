@@ -4,6 +4,7 @@ import Button from "@ds/button";
 import Input from "@ds/input";
 import Textarea from "@ds/textarea";
 import Card from "@ds/card";
+import Alert from "@ds/alert";
 import styles from "./BookForm.module.css";
 
 export default function BookForm({ onBookCreated, editingBook, setEditingBook }) {
@@ -14,6 +15,7 @@ export default function BookForm({ onBookCreated, editingBook, setEditingBook })
     language: "en",
   });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (editingBook) {
@@ -33,15 +35,18 @@ export default function BookForm({ onBookCreated, editingBook, setEditingBook })
   const handleCancel = () => {
     setEditingBook(null);
     setForm({ title: "", author: "", description: "", language: "en" });
+    setError(null);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError(null);
     try {
       if (editingBook) {
         await updateBook(editingBook.id, form);
         setEditingBook(null);
+        onBookCreated();
       } else {
         await createBook(form);
         onBookCreated();
@@ -49,6 +54,7 @@ export default function BookForm({ onBookCreated, editingBook, setEditingBook })
       setForm({ title: "", author: "", description: "", language: "en" });
     } catch (err) {
       console.error(err);
+      setError("Failed to save book. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -58,6 +64,12 @@ export default function BookForm({ onBookCreated, editingBook, setEditingBook })
     <Card>
       <form onSubmit={handleSubmit}>
         <h2>{editingBook ? "Edit Book" : "Add Book"}</h2>
+
+        {error && (
+          <Alert variant="danger" onDismiss={() => setError(null)}>
+            {error}
+          </Alert>
+        )}
 
         <Input
           label="Title"
